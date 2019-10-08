@@ -1,0 +1,70 @@
+---
+# tasks file for samba
+
+- name: samba packages..
+  yum: 
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - samba
+    - samba-client
+    - samba-common
+
+- name: backup of original samba configuration file
+  copy:
+    src: /etc/samba/smb.conf
+    dest: /etc/samba/smb.conf.orig
+
+- name: creating share directory
+  file: 
+    path: /vicky
+    owner: root
+    group: root
+    mode: 0775
+    state: directory
+
+- name: install semanage 
+  command: yum install policycoreutils-python -y
+
+- name: apply semanage for /vicky directory
+  command: semanage fcontext -a -t samba_share_t '/vicky(/.*)?'
+
+- name: create test files
+  file:
+    path: /vicky/bb
+    state: touch
+
+- name: change workgroup name
+  lineinfile:
+    path: /etc/samba/smb.conf
+    regexp: '^\s*workgroup =.*$'
+    line: '        workgroup = WORKGROUP'
+
+- name: configuration changes in samba file
+  blockinfile:
+    path: /etc/samba/smb.conf
+    block: |
+     [share]
+            comment = samba Server Share
+            path = /vicky
+            read only = yes
+            valid user = bhadra
+            Browsable =yes
+            Writable = yes
+            host allow = 192.168.50.*
+
+- name: create a user
+  user: name=bhadra password={{password}}
+
+#- name: set Samba passwords for each user
+#  shell: "printf '{{ item.passwd }}\n{{ item.passwd }}\n' | smbpasswd -a {{ item.name }}"
+#  with_items:
+#    - { name: dhoni, passwd: bhadra }
+#  tags: smbpasswd
+
+- name: service start and reloaded
+  service:
+    name: smb.service
+    state: started
+    enabled: yes
+

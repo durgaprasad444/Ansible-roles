@@ -1,0 +1,3 @@
+---
+# vars file for sambaclient_role
+pkg1: samba-client.x86_64
