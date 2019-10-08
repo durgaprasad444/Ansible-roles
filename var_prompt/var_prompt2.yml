@@ -1,0 +1,16 @@
+---
+- hosts: puppet-client-1
+
+  vars_prompt:
+    - name: "confirm"
+      prompt: \n You want to enable|disable usb-storage. 
+      private: no
+      default: "disable"
+  tasks:
+    - name: Install http..
+      yum: name=httpd
+      when:  confirm == "enable"
+    
+    - name: Remove http...
+      yum: name=httpd state=absent
+      when:  confirm == "disable"

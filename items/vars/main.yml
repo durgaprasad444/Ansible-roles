@@ -1,0 +1,5 @@
+---
+# vars file for badraj
+ packages:
+   - firefox
+   - python

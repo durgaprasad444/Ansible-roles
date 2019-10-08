@@ -1,0 +1,10 @@
+---
+# vars file for autoscaling
+keypair: key_linux
+instance_type: t2.micro
+security_groups: sg-04975777
+image: ami-6cd6f714
+region: us-west-2
+subnets:
+  - subnet-d54610ac
+ename: autoscaling

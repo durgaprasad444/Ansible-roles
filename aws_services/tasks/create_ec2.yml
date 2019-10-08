@@ -1,0 +1,9 @@
+---
+- name: creating an ec2 instance
+  ec2:
+    image: "{{ image }}"
+    instance_type: "{{ type }}"
+    region: "{{ region }}"
+    key_name: "{{ key_name }}"
+    
+    

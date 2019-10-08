@@ -1,0 +1,8 @@
+---
+- hosts: server2
+  remote_user: svcansible
+  become: yes
+  gather_facts: yes
+  roles:
+    - conda
+  

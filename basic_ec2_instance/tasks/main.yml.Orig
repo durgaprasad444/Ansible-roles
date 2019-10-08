@@ -1,0 +1,14 @@
+---
+- name: Create a new Demo EC2 instance
+  ec2:
+    key_name: "{{ keypair }}"
+    #group: velabs_group  # security group name
+    instance_type: "{{ instance_type }}"
+    image: "{{ ami }}"
+    wait: true
+    ec2_url: https://ec2.us-west-2.amazonaws.com
+    #region: "{{ region }}"
+    count: 1  # default
+    assign_public_ip: yes
+  register: ec2
+   

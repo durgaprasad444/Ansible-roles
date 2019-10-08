@@ -1,0 +1,12 @@
+---
+# vars file for expect
+
+packages: 
+  - freetds
+  - freetds-devel
+  - gcc
+  - make
+  - perl-ExtUtils-CBuilder
+  - perl-ExtUtils-MakeMaker
+  - cpanminus
+

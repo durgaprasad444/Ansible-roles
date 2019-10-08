@@ -1,0 +1,8 @@
+---
+# tasks file for items
+- name: Installing package..
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ packages }}"
+  

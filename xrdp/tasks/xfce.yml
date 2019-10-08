@@ -1,0 +1,28 @@
+---
+ - name: Install Xfce-Session..
+   when: ansible_os_family == "RedHat"
+   block: 
+     - name: Install Xfce-session..
+       yum: 
+        name: "@Xfce"
+        state: present
+  
+     
+     - name: Create Xclients file..
+       file:
+        path: /home/{{ item.user }}/.Xclients
+        state: touch
+        owner: "{{ item.user }}"
+        group: "{{ item.group }}"
+        mode: 0755
+       with_items: "{{ users_info }}"
+        
+
+
+     - name: adding .Xclients entry..
+       lineinfile: 
+        path: /home/{{ item.user }}/.Xclients
+        line: /bin/xfce4-session
+       with_items: "{{ users_info }}"
+   
+   tags: xfce-session

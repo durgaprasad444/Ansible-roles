@@ -1,0 +1,12 @@
+---
+# tasks file for sandeep
+#- name: Installing Package..
+#  yum:
+#    name: "{{ item }}"
+#    state: present
+#  with_items: "{{ packages }}"
+- lineinfile:
+        path: /etc/sysconfig/network-scripts/ifcfg-enp0s3
+        regexp: '^LINKDELAY='
+        line: 'LINKDELAY=30'
+

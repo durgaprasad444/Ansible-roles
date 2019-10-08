@@ -1,0 +1,28 @@
+---
+# tasks file for velabs_profile
+- name: velabs_profile
+  when: ansible_os_family == "RedHat"
+  block: 
+    - name: Disabling Selinux
+      selinux: 
+        state: disabled
+
+    - name: Stopping services
+      service:
+        name: "{{ item }}"
+        enabled: no
+        state: stopped
+      with_items: "{{ services }}"
+
+
+    - name: copying resolv.conf
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        force: yes
+      with_items: "{{ files }}"
+#    - name: copying resolv.conf
+#      copy:
+#        src: resolv.conf
+#        dest: /etc/resolv.conf
+#        force: yes

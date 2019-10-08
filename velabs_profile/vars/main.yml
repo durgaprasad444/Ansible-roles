@@ -1,0 +1,9 @@
+---
+# vars file for velabs_profile
+services: 
+  - NetworkManager
+  - firewalld
+
+files: 
+  - { src: 'resolv.conf', dest: '/etc/resolv.conf' }
+  - { src: 'sudoers', dest: '/etc/sudoers' }

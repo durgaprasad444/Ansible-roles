@@ -1,0 +1,6 @@
+---
+# vars file for sandeep
+packages:
+  - firefox
+  - python
+ 

@@ -1,0 +1,28 @@
+---
+ - name: Install Mate-Session..
+   when: ansible_os_family == "RedHat"
+   block: 
+     - name: Install Mate-session..
+       yum: 
+        name: "@^MATE Desktop"
+        state: present
+  
+     
+     - name: Create xclients file..
+       file:
+        path: /home/{{ item.user }}/.Xclients
+        state: touch
+        owner: "{{ item.user }}"
+        group: "{{ item.group }}"
+        mode: 0755
+       with_items: "{{ users_info }}"
+        
+
+
+     - name: adding .Xclients entry..
+       lineinfile: 
+        path: /home/{{ item.user }}/.Xclients
+        line: /bin/mate-session
+       with_items: "{{ users_info }}"
+   
+   tags: mate-session

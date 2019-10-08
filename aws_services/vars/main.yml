@@ -1,0 +1,8 @@
+---
+# vars file for aws_services
+image: ami-6cd6f714
+type: t2.micro
+region: us-west-2
+key_name: key_linux
+instance_ids:
+  - i-0fb75de0b788c3a6c 

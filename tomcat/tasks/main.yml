@@ -1,0 +1,55 @@
+---
+ - name: installing http and git
+   package: name={{ item }} state=present
+   with_items:
+      - httpd
+      - git
+      - java-1.8.0-openjdk
+      - maven
+
+ - name: enabling http service
+   service: name=httpd state=started enabled=yes
+
+ - name: create a directory under opt
+   file: path=/opt/tomcat state=directory
+
+ - name: dowloading tar file of apache tomcat under /opt
+   get_url: url=https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.29/bin/apache-tomcat-8.5.29.tar.gz dest=/opt/tomcat/
+
+ - name: add group tomcat
+   group: name=tomcat
+
+ - name: add user tomcat
+   user: name=tomcat group=tomcat home=/opt/tomcat createhome=no
+   become: True 
+   become_method: sudo
+
+ - name: extracting the tar file of tomcat
+   unarchive: src=/opt/tomcat/apache-tomcat-8.5.29.tar.gz dest=/opt/tomcat/ remote_src=yes
+
+ - name: stop firewalld
+   service: name=firewalld state=stopped
+ 
+ - name: disable selinux
+   selinux: state=disabled
+
+ - name: using template for managerapp 
+   template: src=tomcat-users.xml.j2 dest=/opt/tomcat/apache-tomcat-8.5.29/conf/tomcat-users.xml
+
+ - name: service template
+   template: src=service.j2 dest=/etc/systemd/system/tomcat.service mode=777  
+
+ - name: changing context.xml file
+   template: src=context.xml.j2 dest=/opt/tomcat/apache-tomcat-8.5.29/webapps/manager/META-INF/context.xml
+
+ - name: permissions for files
+   file: path=/opt/tomcat/apache-tomcat-8.5.29/ owner=tomcat group=tomcat state=directory recurse=yes
+
+ - name: read permissions of conf to tomcat
+   file: path=/opt/tomcat/apache-tomcat-8.5.29/conf mode=754
+ 
+ - name: service daemon start
+   systemd: daemon_reload=yes
+
+ - name: starting tomcat
+   command: chdir=/opt/tomcat/apache-tomcat-8.5.29/bin ./startup.sh remote_src=yes

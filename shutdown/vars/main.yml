@@ -1,0 +1,5 @@
+---
+# vars file for shutdown
+ansible_ssh_host:
+  - 192.168.50.182
+  - 192.168.50.183

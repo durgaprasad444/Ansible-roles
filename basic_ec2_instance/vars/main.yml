@@ -1,0 +1,29 @@
+---
+# vars file for basic_ec2_instance
+
+
+
+#jannapuID
+#access_key: AKIAIM4C4HXCFDD3OC2A
+#secret_key: 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
+
+
+#niranjangitlab
+
+access_key: AKIAIJJBWDST5GLQID4Q
+secret_key: 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
+#
+#
+#
+#keypair: key_linux
+#keypair: gitlab
+ 
+#custom_group: sg-f0303798
+custom_group: sg-be7dcad4
+ 
+t2: t2.micro
+
+ami: ami-a9d09ed1
+ 
+our_region: us-west-2
+

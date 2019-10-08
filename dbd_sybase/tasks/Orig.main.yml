@@ -1,0 +1,26 @@
+---
+# tasks file for expect
+- name: using expect module..
+  when: ansible_os_family == "RedHat"
+  block: 
+    - name: making making.pl
+      expect:
+        chdir: /tmp/DBD-Sybase-1.15/
+        command: /usr/bin/perl Makefile.PL
+        responses:
+          Questions: 
+            #- Use 'CHAINED' mode by default (Y/N) [Y]: 'Y'
+            - Use 'CHAINED' mode by default (Y/N) [Y]
+            - Use the threaded (lib..._r) libraries [N]: 'N'
+            - Sybase server to use (default:SYBASE): 'SYBASE'
+            - User ID to log in to Sybase (default:sa): 'sa'
+            - Password (default:undef): 'password'
+            - Sybase database to use on SYBASE (default:undef): 'undef'
+        echo: yes
+
+
+    - name: running make..
+      command: cd /tmp/DBD-Sybase-1.15/ ;  /usr/bin/make
+
+    - name: running make install..
+      command: cd /tmp/DBD-Sybase-1.15/ ; /usr/bin/make install

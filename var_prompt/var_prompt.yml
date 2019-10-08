@@ -1,0 +1,13 @@
+---
+- hosts: all
+
+  vars_prompt:
+    - name: "confirm"
+      prompt: Just to confirm you will install stuff 
+      private: no
+      default: "no"
+  tasks:
+    - name: Install Nginx
+      yum: name=httpd
+      #sudo: true 
+      when:  confirm == "yes"

@@ -1,0 +1,5 @@
+#- name: checking for kernel module existance..
+-  modprobe:
+    name: usb_storage
+    state: absent
+

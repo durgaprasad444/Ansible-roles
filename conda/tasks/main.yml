@@ -1,0 +1,31 @@
+---
+- name: changing /opt permissions
+  file: 
+    path: /opt
+    mode: 0777
+    recurse: yes
+
+
+- name: Installing bzip2..
+  yum: 
+    name: bzip2
+    state: installed
+
+
+- name: downloading Anaconda packages..
+  get_url:  
+    url:  http://192.168.50.134/{{ conda_version }}
+    dest: /opt
+    mode: 0777
+
+- name: installing Anaconda...
+  command: "{{item}}"
+
+  with_items: 
+  - bash -x /opt/{{ conda_version }} -p /opt/anaconda -b
+  - echo "export PATH=/opt/anaconda/bin:$PATH" >> /home/user3/.bashrc
+  - rm -rf /opt/{{ conda_version }}
+
+
+- name: creating environment.....
+  command: /opt/anaconda/bin/conda env create -f /opt/package.yml test

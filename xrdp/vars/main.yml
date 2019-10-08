@@ -1,0 +1,10 @@
+---
+# vars file for xrdp
+# vars file for xrdp
+packages: 
+  - xrdp
+  - tigervnc
+ 
+users_info:  
+  - { user: 'devops', group: 'devops' }
+

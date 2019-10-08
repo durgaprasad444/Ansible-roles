@@ -1,0 +1,5 @@
+---
+- ec2:
+    region: "{{ region }}"
+    instance_ids: "{{ instance_ids }}"
+    state: absent

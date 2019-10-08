@@ -1,0 +1,16 @@
+---
+- name: Create a new Demo EC2 instance
+  ec2:
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    image: "{{ ami }}"
+    wait: yes
+    instance_type: "{{ instance_type }}"
+    group_id: "{{ group }}"
+    #region: "{{ region }}"
+    count: 1  # default
+    #assign_public_ip: yes
+    #instance_type: "{{ instance_type }}"
+    ec2_url: https://ec2.us-west-2.amazonaws.com
+  register: ec2
+   

@@ -1,0 +1,12 @@
+---
+# tasks file for expect
+- name: using expect module..
+  when: ansible_os_family == "RedHat"
+  block: 
+    - name: shell script for entering Name..
+      expect: 
+        command: bash /ansible-roles/expect.sh
+        #timeout: 50
+        responses: 
+            Enter your name: 'niranjan'
+        echo: yes

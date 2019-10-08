@@ -1,0 +1,22 @@
+---
+- name: To copy rpm's to one local location
+  copy:
+    src: "{{ source }}"
+    dest: /etc/comb
+#- name: create an file in yum repository directory
+#  file:
+#    name: "/etc/yum.repos.d/{{ name }}"
+#    state: touch
+#- name: adding the content on the newly created file in yum repository
+#  blockinfile:
+#    path: "/etc/yum.repos.d/{{ name }}"
+#    block: |
+#      [name.repo]
+#      name= dev
+#      baseurl= "file:///{{ file }}"
+#      enabled=1
+#- name: enable and start the service
+#  systemd:
+#    name: vsftpd
+#    state: started
+#    enabled: yes

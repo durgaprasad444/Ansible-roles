@@ -1,0 +1,7 @@
+---
+source:
+  - /ansible/comb
+#file:
+#  - /etc/comb
+#name:
+#  - lin.repo

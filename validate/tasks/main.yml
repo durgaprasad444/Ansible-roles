@@ -1,0 +1,9 @@
+---
+  - name:  Identifying and modifying bond0
+    template:
+      src: val.j2
+      dest: /tmp/validateinfo
+      validate: "which date %s"
+      #validate: "which date -f %s -t"
+      #validate: "which touch  %s"
+      #validate: 'grep -L {{ ansible_hostname }} %s'

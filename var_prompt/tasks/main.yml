@@ -1,0 +1,25 @@
+---
+- hosts: puppet-client-1
+  
+  
+  vars: 
+    usb_storage: /lib/modules/3.10.0-693.el7.x86_64/kernel/drivers/usb/storage/usb-storage.ko.xz
+
+
+  
+  vars_prompt:
+    - name: "confirm"
+      prompt: "\n You want to enable|disable usb-storage."
+      private: no
+      default: "disable"
+  
+  
+  
+  tasks:
+    - name: loading usb-storage kernel module...
+      shell: insmod  '{{ usb_storage }}' 
+      when:  confirm == "enable"
+    
+    - name: Unloading usb-storage kernel module...
+      shell: rmmod '{{ usb_storage }}'
+      when:  confirm == "disable"

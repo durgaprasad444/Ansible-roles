@@ -1,0 +1,35 @@
+---
+- name: changing /opt permissions
+  file: 
+    path: /opt
+    mode: 0777
+    recurse: yes
+
+
+- name: Installing bzip2..
+  yum: 
+    name: bzip2
+    state: installed
+
+
+- name: downloading Anaconda packages..
+  get_url:  
+    url:  http://192.168.50.134/Anaconda3-5.0.1-Linux-x86_64.sh
+    dest: /opt
+    mode: 0777
+
+
+- name: installing Anaconda...
+  command: bash -x /opt/Anaconda3-5.0.1-Linux-x86_64.sh -p /opt/anaconda -b
+  
+
+- name: adding PATH to user..
+  lineinfile: 
+    path: '/home/user2/.bashrc'
+    line: export PATH=/opt/anaconda/bin:$PATH"
+
+
+#- name: Sourcing Anaconda...
+#  command: source /home/user2/.bashrc
+
+

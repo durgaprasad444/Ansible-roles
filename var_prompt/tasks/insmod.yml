@@ -1,0 +1,2 @@
+---
+  shell: insmod  '{{ usb_storage }}'

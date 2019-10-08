@@ -1,0 +1,17 @@
+---
+ - name: using expect module..
+   when: ansible_os_family == "RedHat"
+   block:
+     - name: Installing freetds abd freetds-devel
+       yum: 
+        name: "{{ item }}"
+       with_items: "{{ packages}}"
+        
+              
+     - name: copying DBD::Sybase Packages..
+       copy: 
+        src: DBD-Sybase-1.15
+        dest: /tmp/
+     
+     - name: executing perl Make
+       shell: SYBASE=/usr ; cd /tmp/DBD-Sybase-1.15 ; perl Makefile.PL --accept_test_defaults --chained {Y, N} --threaded_libs {Y, N} ; make ; make install

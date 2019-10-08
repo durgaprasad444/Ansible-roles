@@ -1,0 +1,5 @@
+---
+# tasks file for path_set
+  - name: adding a path..
+    environment: 
+      PATH: "/usr/bin/condor_q:{{ ansible_env.PATH }}"

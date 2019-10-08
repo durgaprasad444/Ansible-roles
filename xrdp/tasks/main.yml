@@ -1,0 +1,6 @@
+---
+# tasks file for xrdp
+  - include: mate-session.yml
+  - include: xrdp.yml
+  - include: xfce.yml
+  
