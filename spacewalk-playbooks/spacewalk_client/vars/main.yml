@@ -1,0 +1,13 @@
+---
+# vars file for spacewalk_client
+spacewalk6:
+  - https://copr-be.cloud.fedoraproject.org/results/@spacewalkproject/spacewalk-2.8-client/epel-6-x86_64/00742644-spacewalk-repo/spacewalk-client-repo-2.8-11.el6.noarch.rpm
+  - http://dl.fedoraproject.org/pub/epel/epel-release-latest-6.noarch.rpm
+  - rhn-client-tools, rhn-check, rhn-setup, rhnsd, m2crypto, yum-rhn-plugin
+  - http://spacewalk.point.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm
+spacewalk7:
+  - https://copr-be.cloud.fedoraproject.org/results/@spacewalkproject/spacewalk-2.8-client/epel-7-x86_64/00742644-spacewalk-repo/spacewalk-client-repo-2.8-11.el7.centos.noarch.rpm
+  - http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  - rhn-client-tools, rhn-check, rhn-setup, rhnsd, m2crypto, yum-rhn-plugin
+  - https://spacewalk.point.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm
+

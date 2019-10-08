@@ -1,0 +1,9 @@
+---
+# vars file for spacewalk_client
+java: /root/group_spacewalkproject-java-packages-epel-7.repo
+
+spacewalk-repo:
+  - spacewalk-repo-2.8-11.el6.noarch.rpm
+  - rhn-client-tools rhn-check rhn-setup rhnsd m2crypto yum-rhn-plugin
+  - http://spacewalk.devops.com/pub/rhn-org-trusted-ssl-cert-1.0-1.noarch.rpm
+  

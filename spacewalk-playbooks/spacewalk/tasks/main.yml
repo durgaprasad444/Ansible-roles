@@ -1,0 +1,57 @@
+---
+# tasks file for spacewalk
+- name: Enable EPEL
+  yum: 
+    name: epel-release
+
+- name: Install newer java repo
+  command: cd /etc/yum.repos.d && curl -O https://copr.fedorainfracloud.org/coprs/g/spacewalkproject/java-packages/repo/epel-7/group_spacewalkproject-java-packages-epel-7.repo
+
+- name: Install Spacewalk repository
+  yum: 
+    name: http://copr-be.cloud.fedoraproject.org/results/@spacewalkproject/spacewalk-2.8/epel-7-x86_64/00736372-spacewalk-repo/spacewalk-repo-2.8-11.el7.centos.noarch.rpm
+
+- name: Install Spacewalk-setup-postgresql
+  yum: 
+    name: spacewalk-setup-postgresql 
+    state: present
+
+- name: Ensure hostname in /etc/hosts
+  lineinfile: dest=/etc/hosts regexp=^{{ansible_default_ipv4.address}} line="{{ansible_default_ipv4.address}} spacewalk-test"
+
+- name: Install spacewalk-postgresql
+  yum: 
+    name: spacewalk-postgresql 
+    state: present
+
+- name: Copy answers file for spacewalk setip
+  template: 
+    src: answers.j2 
+    dest: /var/tmp/answers 
+    owner: root 
+    group: root 
+    mode: 0600
+
+- name: install
+  yum: name={{ item }}
+          state=installed
+  with_items:
+    - python-psycopg2
+    - postgresql-server
+    - postgresql
+
+- name: Initiate database
+  command: service postgresql initdb
+           creates=/var/lib/pgsql/data/postgresql.conf
+
+
+#- name: run initdb first as a workarpound, see https://bugzilla.redhat.com/show_bug.cgi?id=1524221
+#  command: postgresql-setup initdb
+   
+
+- name: Install spacewalk
+  command: spacewalk-setup --answer-file=/var/tmp/answers
+             creates=/var/satellite
+
+- template: src=iptables.j2 dest=/etc/sysconfig/iptables owner=root group=root mode=0600
+  notify: restart_iptables

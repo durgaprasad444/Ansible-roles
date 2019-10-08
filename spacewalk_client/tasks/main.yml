@@ -1,0 +1,12 @@
+---
+# tasks file for spacewalk_client
+# - name: installing java packages
+#   copy: 
+#     src: '{{ java }}'
+#     dest: /etc/yum.repos.d/
+ - name: Installing spacwalk repo rpm 
+   yum: 
+     name: '{{ spacewalk-repo }}'
+     state: present
+ - name: command to add spacewalk client to spacewalk server
+   command: /usr/sbin/rhnreg_ks  --activationkey 1-da90554a500c0769329a7f9024ee060b --serverUrl https://spacewalk.devops.com/XMLRPC

@@ -1,0 +1,23 @@
+---
+# tasks file for spacewalk_client
+- name: Adding the Spacewalk hostname in /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: '192.168.50.91 spacewalk.point.com spacewalk'
+
+- name: Install spacewalk client repository and required packages
+  yum:
+    name: '{{ spacewalk6 }}'
+    state: present
+    validate_certs: no
+  when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "6"
+
+- name: Install spacewalk client repository and required packages
+  yum:
+    name: '{{ spacewalk7 }}'
+    state: present
+    validate_certs: no
+  when: ansible_facts['distribution'] == "CentOS" and ansible_facts['distribution_major_version'] == "7"
+
+- name: To add spacewalk client system to Spacewalk Server
+  command: "rhnreg_ks --activationkey 1-df048c0f83de2dd9a5269b3552f3e61c --serverUrl https://spacewalk.point.com/XMLRPC --force"

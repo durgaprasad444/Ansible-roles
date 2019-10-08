@@ -1,0 +1,33 @@
+---
+- hosts: 192.168.50.101 
+  remote_user: root
+  become: yes
+  pre_tasks:
+    - hostname: name=spacewalk02
+  roles:
+    - spacewalk
+    - role: iptables
+      firewall_alloed_tcp_ports:
+      - 32 
+      - 80
+      - 443
+      - 5222
+      - 5269
+   
+
+- hosts: 192.168.50.101
+  sudo: yes
+
+  vars_prompt:
+    - name: "ready_to_go"
+      prompt: "Login to the spacewalk and set up and admin account. Hit Enter when ready"
+      private: no
+
+    - name: "admin_password"
+      prompt: "Admin Password"
+      default: "test123"
+      private: yes
+  roles:
+    - role: spacewalk-customisations
+      spacewalk_admin_password: "{{admin_password}}"
+    

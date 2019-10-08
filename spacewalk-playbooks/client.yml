@@ -1,0 +1,7 @@
+---
+- hosts: 192.168.50.160
+  remote_user: root
+  become: yes
+  gather_facts: yes
+  roles:
+    - spacewalk_client
